@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 @module
 abstract class SupabaseInjectableModule {
   @lazySingleton
-  Supabase get _supabaseInstance => Supabase.instance;
-  SupabaseAuth get _supabaseAuth => SupabaseAuth.instance;
- 
+  Supabase get supabase => Supabase.instance;
+  SupabaseAuth get supabaseAuth => SupabaseAuth.instance;
 }
