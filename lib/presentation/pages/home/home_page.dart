@@ -5,6 +5,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        leading: const Text("HankoFiles"),
+        actions: const [IconButton(onPressed: null, icon: Icon(Icons.menu))],
+      ),
+      body: SingleChildScrollView(
+          child: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        children: [
+          
+        ],
+      )),
+    );
   }
 }

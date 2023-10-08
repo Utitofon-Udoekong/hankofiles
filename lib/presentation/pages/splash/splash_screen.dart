@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hankofiles/presentation/pages/splash/widgets/hero_image.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,8 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Center(
-      child: Image.asset("images/logo.png")
+      child: HeroImage(width: width)
     );
   }
 }

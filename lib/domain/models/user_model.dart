@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hankofiles/constants/methods.dart';
+import 'package:hankofiles/domain/models/responses/response_models.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
@@ -18,20 +19,3 @@ abstract class UserModel with _$UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 }
 
-class EmailObject {
-  final String address;
-  @JsonKey(name: "created_at", fromJson: getDateTimeFromISO8601String) DateTime? createdAt;
-  String? id;
-  bool? is_primary;
-  bool? is_verified;
-  @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String) DateTime? updatedAt;
-
-  EmailObject({
-    required this.address,
-    this.createdAt,
-    this.id,
-    this.is_primary,
-    this.is_verified,
-    this.updatedAt,
-  });
-}
