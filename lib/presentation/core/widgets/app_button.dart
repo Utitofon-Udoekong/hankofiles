@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  final double width;
   final String title;
   final Color backgroundColor;
   final Color textColor;
@@ -10,7 +9,6 @@ class AppButton extends StatelessWidget {
   final void Function()? onPressed;
   const AppButton(
       {super.key,
-      required this.width,
       required this.backgroundColor,
       required this.textColor,
       required this.hasIcon,
@@ -24,7 +22,8 @@ class AppButton extends StatelessWidget {
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(backgroundColor),
-        fixedSize: MaterialStatePropertyAll(Size(width, 50))
+        fixedSize: const MaterialStatePropertyAll(Size(double.infinity, 50)),
+        shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
       ),
       child: hasIcon
           ? Row(
@@ -32,18 +31,19 @@ class AppButton extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(color: textColor, fontSize: 15),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor, fontSize: 20),
                 ),
+                const SizedBox(width: 15),
                 Icon(
                   icon,
                   color: textColor,
-                  size: 15,
+                  size: 20,
                 )
               ],
             )
           : Text(
               title,
-              style: TextStyle(color: textColor, fontSize: 15),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor, fontSize: 20),
             ),
     );
   }
