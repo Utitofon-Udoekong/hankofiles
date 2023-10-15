@@ -14,6 +14,9 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       id: json['id'] as String,
       updatedAt: getDateTimeFromISO8601String(json['updated_at'] as String),
+      webAuthNCredentials: (json['webauthn_credentials'] as List<dynamic>?)
+          ?.map((e) => WebAuthN.fromJson(e as String))
+          .toList(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -22,4 +25,5 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'emails': instance.emails,
       'id': instance.id,
       'updated_at': instance.updatedAt.toIso8601String(),
+      'webauthn_credentials': instance.webAuthNCredentials,
     };

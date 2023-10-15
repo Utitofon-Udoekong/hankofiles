@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
-
+// import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hankofiles/constants/constants.dart';
+import 'package:hankofiles/constants/methods.dart';
 import 'package:hankofiles/domain/facades/i_auth_facade.dart';
 import 'package:hankofiles/domain/models/responses/response_models.dart';
 import 'package:hankofiles/domain/models/user_model.dart';
@@ -19,30 +21,40 @@ final dio = Dio(BaseOptions(
     headers: {
       "Content-Type": "application/json"
     }
-  ))..interceptors.add(CookieManager(PersistCookieJar()));
+  ));
+  // ..interceptors.add(CookieManager(PersistCookieJar()));
 
 
 @LazySingleton(as: IAuthFacade)
 class AuthFacade implements IAuthFacade{
+
+  /// CREATES A USER IN THE DATABASE. THIS METHOD SHOULD BE SUCCEDED BY A PASSCODE INITIALIZATION METHOD TO VERIFY THE EMAIL ADDRESS
   @override
-  Future<Either<String,UserModel>> createUser({required String email}) async{
+  Future<Either<String,PasscodeResponse>> createUser({required String email}) async{
     Response response;
+    PasscodeResponse passcodeResponse = PasscodeResponse.empty();
     try {
       response = await dio.post('/users', data: {
-        "emails":[{"address":email,"is_primary":false}]
-      });
+        "email": email
+      } );
+
       final data = response.data;
       print(data);
-      final userModel = UserModel.fromJson(data);
-      return right(userModel);
+      final getPassCode = await initializePasscodeLogin(email_id: data["email_id"], user_id: data["user_id"]);
+      if(getPassCode.isRight()){
+        getPassCode.fold((l) => null, (r) {
+          print("r");
+          print(r);
+          passcodeResponse = r;
+        });
+      }
+      return right(passcodeResponse);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      return left(e.message ?? "An error occured");
+      return left(handleExceptions(e));
     }
   }
 
-
+  /// GET'S THE ID OF THE CURRENTLY SIGNED IN USER
   @override
   Future<Either<String,String>> getCurrentUserID({required String cookie}) async{
     Response response;
@@ -51,15 +63,11 @@ class AuthFacade implements IAuthFacade{
       print(response.data);
       return right(response.data);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+     return left(handleExceptions(e));
     }
   }
 
+  /// RETURNS A USER OBJECT WITH A UID AND EMAIL ID. THE UID CAN BE USED TO GET THE FULL USER OBJECT
   @override
   Future<Either<String,UserFromEmail>> getUserByEmail({required String email}) async{
     Response response;
@@ -68,19 +76,16 @@ class AuthFacade implements IAuthFacade{
         "email": email
       });
       final data = response.data;
+      print("email");
       print(data);
       final user = UserFromEmail.fromJson(data);
       return right(user);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+      return left(handleExceptions(e));
     }
   }
 
+  /// GET'S USER DETAILS BY AN ID. RETURNS A CONCISE USER OBJECT
   @override
   Future<Either<String,UserModel>> getUserByID({required String id}) async{
     Response response;
@@ -89,15 +94,11 @@ class AuthFacade implements IAuthFacade{
       print(response.data);
       return right(response.data);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+      return left(handleExceptions(e));
     }
   }
 
+  //Logs out the current user
   @override
   Future<Either<String,String>> logout({required String cookie}) async {
     Response response;
@@ -106,17 +107,13 @@ class AuthFacade implements IAuthFacade{
       print(response.data);
       return right("Logged out");
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+     return left(handleExceptions(e));
     }
   }
 
+  /// INITIALIZE PASSCODE LOGIN. WILL REQUIRE A USER ID FROM A PREVIOUS POST REQUEST SUCH AS create_user
   @override
-  Future<Either<String,PasscodeResponse>> passcodeLogin({required String email_id, required String user_id}) async {
+  Future<Either<String,PasscodeResponse>> initializePasscodeLogin({required String email_id, required String user_id}) async {
     Response response;
     try {
       response = await dio.post("/passcode/login/initialize",data: {
@@ -124,21 +121,20 @@ class AuthFacade implements IAuthFacade{
         "user_id": user_id
       });
       final data = response.data;
+      print("passcode data");
       print(data);
-      final passcodeResponse = PasscodeResponse.fromJson(data);
+      final passcodeResponse = PasscodeResponse.fromJson(jsonEncode(data));
+      print(passcodeResponse);
+         print("passcode data end");
       return right(passcodeResponse);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+      return left(handleExceptions(e));
     }
   }
 
+  /// FINALIZE PASSCODE LOGIN. ALSO USED TO VERIFY EMAIL ADDRESSES
   @override
-  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required String id, required String code}) async{
+  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required int id, required String code}) async{
     Response response;
     try {
       response = await dio.post('/passcode/login/finalize', data: {
@@ -150,12 +146,7 @@ class AuthFacade implements IAuthFacade{
       final passcodeResponse = PasscodeResponse.fromJson(data);
       return right(passcodeResponse);
     } on DioException catch (e) {
-      print(e.message);
-      print(e.response!.statusCode);
-      // if(e.type == DioExceptionType.connectionError) return left("No internet connection detected");
-      // if(e.response == null) return left("OOPS. Server error encountered");
-      // if(e.response!.statusCode == 401) return left("Session expired. Login to continue");
-      return left(e.message ?? "An error occured");
+      return left(handleExceptions(e));
     }
   }
 

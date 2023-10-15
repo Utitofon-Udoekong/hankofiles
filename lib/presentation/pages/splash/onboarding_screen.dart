@@ -21,10 +21,16 @@ class OnboardingScreen extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          Text("Welcome to", style: Theme.of(context).textTheme.titleLarge),
-          Text("Hanko Files", style: Theme.of(context).textTheme.headlineMedium,),
+          Text("Welcome to", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: kBlack)),
+          const SizedBox(
+            height: 10,
+          ),
+          Text("Hanko Files", style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: kBlack),),
+          const SizedBox(
+            height: 10,
+          ),
           Text(
-              "Best cloud storage platform for all business and individuals to manage there data", style: Theme.of(context).textTheme.titleLarge),
+              "Best cloud storage platform for all business and individuals to manage there data", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: kBlack)),
           const SizedBox(
             height: 20,
           ),
@@ -32,31 +38,26 @@ class OnboardingScreen extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               AppButton(
-                backgroundColor: kBlack.withOpacity(0.1),
+                width: width,
+                backgroundColor: Colors.white,
                 textColor: kBlack,
-                hasIcon: true,
-                icon: Icons.fingerprint,
-                title: "Bio",
+                hasIcon: false,
+                title: "Login", 
+                onPressed: () => context.push("/login"),
+                disabled: false,
               ),
-              const AppButton(
+              const SizedBox(height: 20,),
+              AppButton(
+                width: width,
                 backgroundColor: kRed,
                 textColor: kWhite,
-                hasIcon: true,
-                icon: Icons.arrow_forward,
-                title: "Sign In",
+                hasIcon: false,
+                title: "Register",
+                disabled: false,
+                onPressed: () => context.push("/register")
               ),
-            ],
-          ),
-          const Spacer(),
-          Center(
-            child: InkWell(
-              onTap: () => context.go("/register"),
-              child: const Text("Create an account")),
-          ),
+          
           const Spacer(),
               ],
             ),

@@ -44,6 +44,7 @@ abstract class $AuthStateCopyWith<$Res> {
       bool isLoading});
 
   $UserModelCopyWith<$Res> get userModel;
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse;
 }
 
 /// @nodoc
@@ -106,6 +107,14 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
       return _then(_value.copyWith(userModel: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse {
+    return $PasscodeResponseCopyWith<$Res>(_value.passcodeResponse, (value) {
+      return _then(_value.copyWith(passcodeResponse: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -127,6 +136,8 @@ abstract class _$$AuthStateImplCopyWith<$Res>
 
   @override
   $UserModelCopyWith<$Res> get userModel;
+  @override
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse;
 }
 
 /// @nodoc

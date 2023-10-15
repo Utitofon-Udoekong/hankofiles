@@ -14,7 +14,7 @@ class AuthState with _$AuthState {
 
   factory AuthState.empty() => AuthState(
       userModel: UserModel.empty(),
-      email: "",
+      email: "mosesrahul37@gmail.com",
       code: "",
       passcodeResponse: PasscodeResponse.empty(),
       failure: '',

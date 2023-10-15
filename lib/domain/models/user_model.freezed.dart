@@ -26,6 +26,8 @@ mixin _$UserModel {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "webauthn_credentials")
+  List<WebAuthN>? get webAuthNCredentials => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,9 @@ abstract class $UserModelCopyWith<$Res> {
       List<EmailObject> emails,
       String id,
       @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
-      DateTime updatedAt});
+      DateTime updatedAt,
+      @JsonKey(name: "webauthn_credentials")
+      List<WebAuthN>? webAuthNCredentials});
 }
 
 /// @nodoc
@@ -64,6 +68,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? emails = null,
     Object? id = null,
     Object? updatedAt = null,
+    Object? webAuthNCredentials = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: null == createdAt
@@ -82,6 +87,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      webAuthNCredentials: freezed == webAuthNCredentials
+          ? _value.webAuthNCredentials
+          : webAuthNCredentials // ignore: cast_nullable_to_non_nullable
+              as List<WebAuthN>?,
     ) as $Val);
   }
 }
@@ -100,7 +109,9 @@ abstract class _$$UserModelImplCopyWith<$Res>
       List<EmailObject> emails,
       String id,
       @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
-      DateTime updatedAt});
+      DateTime updatedAt,
+      @JsonKey(name: "webauthn_credentials")
+      List<WebAuthN>? webAuthNCredentials});
 }
 
 /// @nodoc
@@ -118,6 +129,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? emails = null,
     Object? id = null,
     Object? updatedAt = null,
+    Object? webAuthNCredentials = freezed,
   }) {
     return _then(_$UserModelImpl(
       createdAt: null == createdAt
@@ -136,6 +148,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      webAuthNCredentials: freezed == webAuthNCredentials
+          ? _value._webAuthNCredentials
+          : webAuthNCredentials // ignore: cast_nullable_to_non_nullable
+              as List<WebAuthN>?,
     ));
   }
 }
@@ -149,8 +165,11 @@ class _$UserModelImpl implements _UserModel {
       required final List<EmailObject> emails,
       required this.id,
       @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
-      required this.updatedAt})
-      : _emails = emails;
+      required this.updatedAt,
+      @JsonKey(name: "webauthn_credentials")
+      final List<WebAuthN>? webAuthNCredentials})
+      : _emails = emails,
+        _webAuthNCredentials = webAuthNCredentials;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -171,10 +190,21 @@ class _$UserModelImpl implements _UserModel {
   @override
   @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
   final DateTime updatedAt;
+  final List<WebAuthN>? _webAuthNCredentials;
+  @override
+  @JsonKey(name: "webauthn_credentials")
+  List<WebAuthN>? get webAuthNCredentials {
+    final value = _webAuthNCredentials;
+    if (value == null) return null;
+    if (_webAuthNCredentials is EqualUnmodifiableListView)
+      return _webAuthNCredentials;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'UserModel(createdAt: $createdAt, emails: $emails, id: $id, updatedAt: $updatedAt)';
+    return 'UserModel(createdAt: $createdAt, emails: $emails, id: $id, updatedAt: $updatedAt, webAuthNCredentials: $webAuthNCredentials)';
   }
 
   @override
@@ -187,13 +217,20 @@ class _$UserModelImpl implements _UserModel {
             const DeepCollectionEquality().equals(other._emails, _emails) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality()
+                .equals(other._webAuthNCredentials, _webAuthNCredentials));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, createdAt,
-      const DeepCollectionEquality().hash(_emails), id, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      createdAt,
+      const DeepCollectionEquality().hash(_emails),
+      id,
+      updatedAt,
+      const DeepCollectionEquality().hash(_webAuthNCredentials));
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +253,9 @@ abstract class _UserModel implements UserModel {
       required final List<EmailObject> emails,
       required final String id,
       @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
-      required final DateTime updatedAt}) = _$UserModelImpl;
+      required final DateTime updatedAt,
+      @JsonKey(name: "webauthn_credentials")
+      final List<WebAuthN>? webAuthNCredentials}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -231,6 +270,9 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: "updated_at", fromJson: getDateTimeFromISO8601String)
   DateTime get updatedAt;
+  @override
+  @JsonKey(name: "webauthn_credentials")
+  List<WebAuthN>? get webAuthNCredentials;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
