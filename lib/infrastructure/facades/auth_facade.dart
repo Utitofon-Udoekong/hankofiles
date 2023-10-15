@@ -123,7 +123,7 @@ class AuthFacade implements IAuthFacade{
       final data = response.data;
       print("passcode data");
       print(data);
-      final passcodeResponse = PasscodeResponse.fromJson(jsonEncode(data));
+      final passcodeResponse = PasscodeResponse.fromJson(data);
       print(passcodeResponse);
          print("passcode data end");
       return right(passcodeResponse);
