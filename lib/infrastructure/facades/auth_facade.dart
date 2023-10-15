@@ -134,7 +134,7 @@ class AuthFacade implements IAuthFacade{
 
   /// FINALIZE PASSCODE LOGIN. ALSO USED TO VERIFY EMAIL ADDRESSES
   @override
-  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required int id, required String code}) async{
+  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required String id, required String code}) async{
     Response response;
     try {
       response = await dio.post('/passcode/login/finalize', data: {

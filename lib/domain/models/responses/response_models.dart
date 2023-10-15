@@ -11,11 +11,11 @@ part 'response_models.g.dart';
 abstract class PasscodeResponse with _$PasscodeResponse {
   const factory PasscodeResponse({
     @JsonKey(fromJson: getDateTimeFromISO8601String) required DateTime created_at,
-        required int id,
-        required String ttl,
+        required String id,
+        required int ttl,
   }) = _PasscodeResponse;
 
-  factory PasscodeResponse.empty() => PasscodeResponse(created_at: DateTime.now(), id: 0, ttl: "");
+  factory PasscodeResponse.empty() => PasscodeResponse(created_at: DateTime.now(), id: "", ttl: 0);
 
   factory PasscodeResponse.fromJson(Map<String, dynamic> json) => _$PasscodeResponseFromJson(json);
 }

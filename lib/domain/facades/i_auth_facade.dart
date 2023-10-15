@@ -10,5 +10,5 @@ abstract class IAuthFacade{
   Future<Either<String,String>> getCurrentUserID({required String cookie});
   Future<Either<String,String>> logout({required String cookie});
   Future<Either<String,PasscodeResponse>> initializePasscodeLogin({required String email_id, required String user_id});
-  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required int id, required String code});
+  Future<Either<String,PasscodeResponse>> finalizePasscodeLogin({required String id, required String code});
 }

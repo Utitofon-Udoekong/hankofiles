@@ -10,8 +10,8 @@ _$PasscodeResponseImpl _$$PasscodeResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$PasscodeResponseImpl(
       created_at: getDateTimeFromISO8601String(json['created_at'] as String),
-      id: json['id'] as int,
-      ttl: json['ttl'] as String,
+      id: json['id'] as String,
+      ttl: json['ttl'] as int,
     );
 
 Map<String, dynamic> _$$PasscodeResponseImplToJson(

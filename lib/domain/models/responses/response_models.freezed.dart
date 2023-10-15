@@ -22,8 +22,8 @@ PasscodeResponse _$PasscodeResponseFromJson(Map<String, dynamic> json) {
 mixin _$PasscodeResponse {
   @JsonKey(fromJson: getDateTimeFromISO8601String)
   DateTime get created_at => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
-  String get ttl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  int get ttl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,8 +39,8 @@ abstract class $PasscodeResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(fromJson: getDateTimeFromISO8601String) DateTime created_at,
-      int id,
-      String ttl});
+      String id,
+      int ttl});
 }
 
 /// @nodoc
@@ -68,11 +68,11 @@ class _$PasscodeResponseCopyWithImpl<$Res, $Val extends PasscodeResponse>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ttl: null == ttl
           ? _value.ttl
           : ttl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -87,8 +87,8 @@ abstract class _$$PasscodeResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(fromJson: getDateTimeFromISO8601String) DateTime created_at,
-      int id,
-      String ttl});
+      String id,
+      int ttl});
 }
 
 /// @nodoc
@@ -114,11 +114,11 @@ class __$$PasscodeResponseImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ttl: null == ttl
           ? _value.ttl
           : ttl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -139,9 +139,9 @@ class _$PasscodeResponseImpl implements _PasscodeResponse {
   @JsonKey(fromJson: getDateTimeFromISO8601String)
   final DateTime created_at;
   @override
-  final int id;
+  final String id;
   @override
-  final String ttl;
+  final int ttl;
 
   @override
   String toString() {
@@ -182,8 +182,8 @@ abstract class _PasscodeResponse implements PasscodeResponse {
   const factory _PasscodeResponse(
       {@JsonKey(fromJson: getDateTimeFromISO8601String)
       required final DateTime created_at,
-      required final int id,
-      required final String ttl}) = _$PasscodeResponseImpl;
+      required final String id,
+      required final int ttl}) = _$PasscodeResponseImpl;
 
   factory _PasscodeResponse.fromJson(Map<String, dynamic> json) =
       _$PasscodeResponseImpl.fromJson;
@@ -192,9 +192,9 @@ abstract class _PasscodeResponse implements PasscodeResponse {
   @JsonKey(fromJson: getDateTimeFromISO8601String)
   DateTime get created_at;
   @override
-  int get id;
+  String get id;
   @override
-  String get ttl;
+  int get ttl;
   @override
   @JsonKey(ignore: true)
   _$$PasscodeResponseImplCopyWith<_$PasscodeResponseImpl> get copyWith =>
