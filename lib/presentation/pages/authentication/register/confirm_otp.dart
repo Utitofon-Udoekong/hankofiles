@@ -9,6 +9,7 @@ import 'package:hankofiles/presentation/core/widgets/otp_field/otp_box_style.dar
 import 'package:hankofiles/presentation/core/widgets/otp_field/otp_field_style.dart';
 import 'package:hankofiles/presentation/core/widgets/otp_field/otp_text_field.dart';
 import 'package:hankofiles/presentation/pages/authentication/cubit/auth_cubit.dart';
+import 'package:hankofiles/presentation/core/widgets/app_loader.dart';
 
 class ConfirmOTP extends StatefulWidget {
   const ConfirmOTP({super.key});
@@ -35,7 +36,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
   }
 
   OtpFieldController controller = OtpFieldController();
-
+  // Modify to change the timeout duration
   int smsCodeTimeoutSeconds = 150;
   late Timer? _timer;
 
@@ -64,13 +65,13 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final email = context.select((AuthCubit bloc) => bloc.state.email);
-
+    final isLoading = context.select((AuthCubit bloc) => bloc.state.isLoading);
     return MultiBlocListener(
       listeners: [
         BlocListener<AuthCubit, AuthState>(
           listenWhen: (previous, current) => current.code.length == 6 && current.isLoading == false,
           listener: (context, state) {
-            Future.delayed(const Duration(seconds: 1), () => context.read<AuthCubit>().verifyEmail());
+            // Future.delayed(const Duration(seconds: 1), () => context.read<AuthCubit>().verifyEmail());
           },
         ),
         BlocListener<AuthCubit, AuthState>(
@@ -84,118 +85,121 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
       child: Scaffold(
           body: SafeArea(
               bottom: false,
-              child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          InkWell(
-                              onTap: () => context.pop(),
-                              child: const Icon(Icons.arrow_back)),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text.rich(
-                            TextSpan(children: [
+              child: Apploader(
+                isLoading: isLoading,
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            InkWell(
+                                onTap: () => context.pop(),
+                                child: const Icon(Icons.arrow_back)),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                    text: "Check your\n",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: Colors.black)),
+                                TextSpan(
+                                    text: "inbox",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: kRed)),
+                              ]),
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text.rich(TextSpan(children: <TextSpan>[
                               TextSpan(
-                                  text: "Check your\n",
+                                  text: "We just sent a ",
+                                  style: Theme.of(context).textTheme.bodySmall),
+                              TextSpan(
+                                  text: "6-digit ",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
-                                      ?.copyWith(color: Colors.black)),
+                                      ?.copyWith(fontWeight: FontWeight.w700)),
                               TextSpan(
-                                  text: "inbox",
+                                  text: "verification code to ",
+                                  style: Theme.of(context).textTheme.bodyMedium),
+                              TextSpan(
+                                  text: email,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleMedium
-                                      ?.copyWith(color: kRed)),
-                            ]),
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text.rich(TextSpan(children: <TextSpan>[
-                            TextSpan(
-                                text: "We just sent a ",
-                                style: Theme.of(context).textTheme.bodySmall),
-                            TextSpan(
-                                text: "6-digit ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(fontWeight: FontWeight.w700)),
-                            TextSpan(
-                                text: "verification code to ",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                            TextSpan(
-                                text: email,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(fontWeight: FontWeight.w700)),
-                            TextSpan(
-                                text:
-                                    ". Enter the code in the boxes below to continue.",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ])),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          OTPTextField(
-                            controller: controller,
-                            fieldHeight: width / 7 - 10,
-                            fieldWidth: width / 7 - 10,
-                            length: 6,
-                            width: width,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(fontSize: 20, color: kBlack),
-                            fieldStyle: FieldStyle.box,
-                            otpFieldStyle: OtpFieldStyle(
-                                borderColor: kBorderColor,
-                                focusBorderColor: kBorderColor),
-                            keyboardType: TextInputType.number,
-                            textFieldAlignment: MainAxisAlignment.spaceAround,
-                            onCompleted: (value) =>
-                                context.read<AuthCubit>().setCode(value),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Expires later: ",
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              countDownTimer(
-                                smsCodeTimeoutSeconds: smsCodeTimeoutSeconds,
-                              ),
-                            ],
-                          )),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          Text.rich(TextSpan(children: [
-                            TextSpan(
-                                text: "Didn't get the code?\n\n",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                            TextSpan(
-                                text: "Resend Code",
-                                style: Theme.of(context).textTheme.titleSmall,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () =>
-                                      context.read<AuthCubit>().signUp()),
-                          ]))
-                        ]),
-                  )))),
+                                      .bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.w700)),
+                              TextSpan(
+                                  text:
+                                      ". Enter the code in the boxes below to continue.",
+                                  style: Theme.of(context).textTheme.bodyMedium),
+                            ])),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            OTPTextField(
+                              controller: controller,
+                              fieldHeight: width / 7 - 10,
+                              fieldWidth: width / 7 - 10,
+                              length: 6,
+                              width: width,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 20, color: kBlack),
+                              fieldStyle: FieldStyle.box,
+                              otpFieldStyle: OtpFieldStyle(
+                                  borderColor: kBorderColor,
+                                  focusBorderColor: kBorderColor),
+                              keyboardType: TextInputType.number,
+                              textFieldAlignment: MainAxisAlignment.spaceAround,
+                              onCompleted: (value) =>
+                                  context.read<AuthCubit>().setCode(value),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Expires later: ",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium),
+                                countDownTimer(
+                                  smsCodeTimeoutSeconds: smsCodeTimeoutSeconds,
+                                ),
+                              ],
+                            )),
+                            const SizedBox(
+                              height: 60,
+                            ),
+                            Text.rich(TextSpan(children: [
+                              TextSpan(
+                                  text: "Didn't get the code?\n\n",
+                                  style: Theme.of(context).textTheme.bodyMedium),
+                              TextSpan(
+                                  text: "Resend Code",
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () =>
+                                        context.read<AuthCubit>().signUp()),
+                            ]))
+                          ]),
+                    )),
+              ))),
     );
   }
 

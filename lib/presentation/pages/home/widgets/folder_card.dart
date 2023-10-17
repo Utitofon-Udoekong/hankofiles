@@ -13,21 +13,22 @@ class FolderCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(20)
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.folder_rounded, color: color,),
+            Icon(Icons.folder_rounded, color: color,size: 40),
             const SizedBox(
-              height: 20
+              height: 10
             ),
             Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),),
             const SizedBox(
-              height: 8
+              height: 5
             ),
             Text(Jiffy.parseFromDateTime(createdAt).yMMMMd, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),),
           ],

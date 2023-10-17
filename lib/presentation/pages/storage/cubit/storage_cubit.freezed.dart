@@ -16,11 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StorageState {
-  File get file => throw _privateConstructorUsedError;
+  File get selectedFile => throw _privateConstructorUsedError;
+  FileObject get supabaseFile => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get success => throw _privateConstructorUsedError;
   String get failure => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  List<FileObject> get files => throw _privateConstructorUsedError;
+  List<String> get filePathsToDelete => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StorageStateCopyWith<StorageState> get copyWith =>
@@ -34,11 +37,14 @@ abstract class $StorageStateCopyWith<$Res> {
       _$StorageStateCopyWithImpl<$Res, StorageState>;
   @useResult
   $Res call(
-      {File file,
+      {File selectedFile,
+      FileObject supabaseFile,
       String email,
       String success,
       String failure,
-      bool isLoading});
+      bool isLoading,
+      List<FileObject> files,
+      List<String> filePathsToDelete});
 }
 
 /// @nodoc
@@ -54,17 +60,24 @@ class _$StorageStateCopyWithImpl<$Res, $Val extends StorageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = null,
+    Object? selectedFile = null,
+    Object? supabaseFile = null,
     Object? email = null,
     Object? success = null,
     Object? failure = null,
     Object? isLoading = null,
+    Object? files = null,
+    Object? filePathsToDelete = null,
   }) {
     return _then(_value.copyWith(
-      file: null == file
-          ? _value.file
-          : file // ignore: cast_nullable_to_non_nullable
+      selectedFile: null == selectedFile
+          ? _value.selectedFile
+          : selectedFile // ignore: cast_nullable_to_non_nullable
               as File,
+      supabaseFile: null == supabaseFile
+          ? _value.supabaseFile
+          : supabaseFile // ignore: cast_nullable_to_non_nullable
+              as FileObject,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -81,6 +94,14 @@ class _$StorageStateCopyWithImpl<$Res, $Val extends StorageState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      files: null == files
+          ? _value.files
+          : files // ignore: cast_nullable_to_non_nullable
+              as List<FileObject>,
+      filePathsToDelete: null == filePathsToDelete
+          ? _value.filePathsToDelete
+          : filePathsToDelete // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -94,11 +115,14 @@ abstract class _$$StorageStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {File file,
+      {File selectedFile,
+      FileObject supabaseFile,
       String email,
       String success,
       String failure,
-      bool isLoading});
+      bool isLoading,
+      List<FileObject> files,
+      List<String> filePathsToDelete});
 }
 
 /// @nodoc
@@ -112,17 +136,24 @@ class __$$StorageStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = null,
+    Object? selectedFile = null,
+    Object? supabaseFile = null,
     Object? email = null,
     Object? success = null,
     Object? failure = null,
     Object? isLoading = null,
+    Object? files = null,
+    Object? filePathsToDelete = null,
   }) {
     return _then(_$StorageStateImpl(
-      file: null == file
-          ? _value.file
-          : file // ignore: cast_nullable_to_non_nullable
+      selectedFile: null == selectedFile
+          ? _value.selectedFile
+          : selectedFile // ignore: cast_nullable_to_non_nullable
               as File,
+      supabaseFile: null == supabaseFile
+          ? _value.supabaseFile
+          : supabaseFile // ignore: cast_nullable_to_non_nullable
+              as FileObject,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -139,6 +170,14 @@ class __$$StorageStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      files: null == files
+          ? _value._files
+          : files // ignore: cast_nullable_to_non_nullable
+              as List<FileObject>,
+      filePathsToDelete: null == filePathsToDelete
+          ? _value._filePathsToDelete
+          : filePathsToDelete // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -147,14 +186,21 @@ class __$$StorageStateImplCopyWithImpl<$Res>
 
 class _$StorageStateImpl implements _StorageState {
   const _$StorageStateImpl(
-      {required this.file,
+      {required this.selectedFile,
+      required this.supabaseFile,
       required this.email,
       required this.success,
       required this.failure,
-      required this.isLoading});
+      required this.isLoading,
+      required final List<FileObject> files,
+      required final List<String> filePathsToDelete})
+      : _files = files,
+        _filePathsToDelete = filePathsToDelete;
 
   @override
-  final File file;
+  final File selectedFile;
+  @override
+  final FileObject supabaseFile;
   @override
   final String email;
   @override
@@ -163,10 +209,26 @@ class _$StorageStateImpl implements _StorageState {
   final String failure;
   @override
   final bool isLoading;
+  final List<FileObject> _files;
+  @override
+  List<FileObject> get files {
+    if (_files is EqualUnmodifiableListView) return _files;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_files);
+  }
+
+  final List<String> _filePathsToDelete;
+  @override
+  List<String> get filePathsToDelete {
+    if (_filePathsToDelete is EqualUnmodifiableListView)
+      return _filePathsToDelete;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filePathsToDelete);
+  }
 
   @override
   String toString() {
-    return 'StorageState(file: $file, email: $email, success: $success, failure: $failure, isLoading: $isLoading)';
+    return 'StorageState(selectedFile: $selectedFile, supabaseFile: $supabaseFile, email: $email, success: $success, failure: $failure, isLoading: $isLoading, files: $files, filePathsToDelete: $filePathsToDelete)';
   }
 
   @override
@@ -174,17 +236,31 @@ class _$StorageStateImpl implements _StorageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StorageStateImpl &&
-            (identical(other.file, file) || other.file == file) &&
+            (identical(other.selectedFile, selectedFile) ||
+                other.selectedFile == selectedFile) &&
+            (identical(other.supabaseFile, supabaseFile) ||
+                other.supabaseFile == supabaseFile) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.failure, failure) || other.failure == failure) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            const DeepCollectionEquality().equals(other._files, _files) &&
+            const DeepCollectionEquality()
+                .equals(other._filePathsToDelete, _filePathsToDelete));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, file, email, success, failure, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedFile,
+      supabaseFile,
+      email,
+      success,
+      failure,
+      isLoading,
+      const DeepCollectionEquality().hash(_files),
+      const DeepCollectionEquality().hash(_filePathsToDelete));
 
   @JsonKey(ignore: true)
   @override
@@ -195,14 +271,19 @@ class _$StorageStateImpl implements _StorageState {
 
 abstract class _StorageState implements StorageState {
   const factory _StorageState(
-      {required final File file,
+      {required final File selectedFile,
+      required final FileObject supabaseFile,
       required final String email,
       required final String success,
       required final String failure,
-      required final bool isLoading}) = _$StorageStateImpl;
+      required final bool isLoading,
+      required final List<FileObject> files,
+      required final List<String> filePathsToDelete}) = _$StorageStateImpl;
 
   @override
-  File get file;
+  File get selectedFile;
+  @override
+  FileObject get supabaseFile;
   @override
   String get email;
   @override
@@ -211,6 +292,10 @@ abstract class _StorageState implements StorageState {
   String get failure;
   @override
   bool get isLoading;
+  @override
+  List<FileObject> get files;
+  @override
+  List<String> get filePathsToDelete;
   @override
   @JsonKey(ignore: true)
   _$$StorageStateImplCopyWith<_$StorageStateImpl> get copyWith =>

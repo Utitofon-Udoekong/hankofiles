@@ -26,6 +26,8 @@ dependencies:
   google_fonts: ^6.1.0
   elegant_notification: ^1.11.2
   jiffy: ^6.2.1
+  flutter_colorpicker: ^1.0.3
+  speed_dial_fab: ^2.3.0
 
 dev_dependencies:
   flutter_test:

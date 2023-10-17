@@ -178,16 +178,13 @@ class _OTPTextFieldState extends State<OTPTextField> {
           )
         : Row(
             children: [
-              const SizedBox(
-                width: 10.0,
-                child: Expanded(
-                    child: Divider(
-                  indent: 2.0,
-                  endIndent: 2.0,
-                  thickness: 2.0,
-                  color: kBlack,
-                )),
-              ),
+              const Expanded(
+                  child: Divider(
+                indent: 2.0,
+                endIndent: 2.0,
+                thickness: 2.0,
+                color: kBlack,
+              )),
               Container(
                 width: widget.fieldWidth,
                 height: widget.fieldHeight,
