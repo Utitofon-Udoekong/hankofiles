@@ -6,7 +6,8 @@ import 'package:hankofiles/presentation/pages/authentication/sign_in/sign_in.dar
 import 'package:hankofiles/presentation/pages/home/home_page.dart';
 import 'package:hankofiles/presentation/pages/splash/onboarding_screen.dart';
 import 'package:hankofiles/presentation/pages/splash/splash_screen.dart';
-import 'package:hankofiles/presentation/pages/storage/folder_page.dart';
+import 'package:hankofiles/presentation/pages/storage/add_file_page.dart';
+import 'package:hankofiles/presentation/pages/storage/file_page.dart';
 import 'package:hankofiles/presentation/pages/storage/storage_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -47,12 +48,18 @@ final GoRouter router = GoRouter(
         routes: [
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
-            path: "folder",
+            path: "file",
             pageBuilder: (context, state) =>
-                const NoTransitionPage(child: Folderpage()),
+                const NoTransitionPage(child: Filepage()),
             ),
 
         ]
       ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: "/upload-file",
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: UploadFilePage()),
+            ),
     ],
     debugLogDiagnostics: true);
