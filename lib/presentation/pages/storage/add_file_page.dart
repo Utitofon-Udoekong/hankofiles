@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hankofiles/presentation/core/widgets/app_button.dart';
 import 'package:hankofiles/presentation/core/widgets/app_loader.dart';
 import 'package:hankofiles/presentation/core/widgets/app_snackbar.dart';
+import 'package:hankofiles/presentation/pages/authentication/cubit/auth_cubit.dart';
 import 'package:hankofiles/presentation/pages/storage/cubit/storage_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hankofiles/constants/colors.dart';
@@ -22,7 +22,7 @@ class _UploadFilePageState extends State<UploadFilePage> {
   bool addToFolder = false;
   @override
   Widget build(BuildContext context) {
-    
+    final uid = context.select((AuthCubit bloc) => bloc.state.userModel.id);
     final size = MediaQuery.of(context).size;
     final isLoading =
         context.select((StorageCubit bloc) => bloc.state.isLoading);
@@ -39,7 +39,7 @@ class _UploadFilePageState extends State<UploadFilePage> {
         body: MultiBlocListener(
       listeners: [
         BlocListener<StorageCubit, StorageState>(
-          listenWhen: (p,c) => c.failure.isNotEmpty,
+          listenWhen: (p,c) => p.failure != c.failure && c.failure.isNotEmpty,
           listener: (context, state) {
             AppSnackbar.showSnackBar(context, state.failure, true);
           },
@@ -86,8 +86,6 @@ class _UploadFilePageState extends State<UploadFilePage> {
 
                     if (result != null) {
                       File file = File(result.files.single.path!);
-                      print(file.path);
-                      print(file.absolute.path);
                       context.read<StorageCubit>().selectFile(file);
                     } else {
                       // USER CANCELLED
@@ -110,7 +108,7 @@ class _UploadFilePageState extends State<UploadFilePage> {
                 title: "Upload File",
                 disabled: selectedFile.path.isEmpty,
                 onPressed: () =>
-                    context.read<StorageCubit>().uploadFile(id: "TEST ID"),
+                    context.read<StorageCubit>().uploadFile(id: uid),
               )
             ]),
           )),

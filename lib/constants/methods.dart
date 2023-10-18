@@ -91,3 +91,7 @@ String bytesConverter(int bytes) {
     return (bytes / 1000).toStringAsFixed(2);
   }
 }
+
+
+/// A stub for the `dart:io` [File] class. Only the methods used by the storage client are stubbed.
+

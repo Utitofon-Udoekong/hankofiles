@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hankofiles/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:hankofiles/constants/colors.dart';
 import 'package:hankofiles/presentation/core/widgets/app_loader.dart';
-import 'package:hankofiles/presentation/pages/storage/widgets/folder_card.dart';
+import 'package:hankofiles/presentation/pages/authentication/cubit/auth_cubit.dart';
 import 'package:hankofiles/presentation/pages/storage/cubit/storage_cubit.dart';
+import 'package:hankofiles/presentation/pages/storage/widgets/folder_card.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -24,6 +26,7 @@ class _StoragePageState extends State<StoragePage> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = context.select((AuthCubit bloc) => bloc.state.userModel.id);
     final files = context.select((StorageCubit bloc) => bloc.state.files);
     final isLoading =
         context.select((StorageCubit bloc) => bloc.state.isLoading);
@@ -58,7 +61,7 @@ class _StoragePageState extends State<StoragePage> {
                           GestureDetector(
                             onTap: () => context
                                 .read<StorageCubit>()
-                                .selectAllFilesToDelete(),
+                                .selectAllFilesToDelete(id: uid),
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
@@ -77,8 +80,8 @@ class _StoragePageState extends State<StoragePage> {
                       ),
                       GestureDetector(
                         onTap: () => filesToDelete.isNotEmpty
-                            ? context.read<StorageCubit>().deleteFiles()
-                            : context.read<StorageCubit>().deleteFile(),
+                            ? context.read<StorageCubit>().deleteFiles(id: uid)
+                            : context.read<StorageCubit>().deleteFile(id: uid),
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -97,7 +100,7 @@ class _StoragePageState extends State<StoragePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                SingleChildScrollView(
+                files.isNotEmpty ? SingleChildScrollView(
                   child: Column(
                       children: files.map((file) {
                     return Column(
@@ -124,7 +127,7 @@ class _StoragePageState extends State<StoragePage> {
                       ],
                     );
                   }).toList()),
-                ),
+                ) : Center(child: Text("You have no file stored", style: Theme.of(context).textTheme.titleMedium,)),
               ],
             ),
           ),

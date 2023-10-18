@@ -41,15 +41,7 @@ class FolderCard extends StatelessWidget {
               .yMMMMd,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),
         ),
-        trailing: PopupMenuButton(
-          itemBuilder: (context) {
-            return [
-              PopupMenuItem(
-                onTap: downloadFile,
-                child: const ListTile(title: Text("Download file")),
-              ),
-            ];
-          },
-        ));
+       
+        );
   }
 }

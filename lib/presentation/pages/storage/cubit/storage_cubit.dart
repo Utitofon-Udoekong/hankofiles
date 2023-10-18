@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -39,8 +38,8 @@ class StorageCubit extends Cubit<StorageState> {
     emit(state.copyWith(filePathsToDelete: pathsToDelete));
   }
   // DELETE ALL FILES FROM STORAGE
-  void selectAllFilesToDelete() {
-    List<String> pathsToDelete = state.files.map((e) => "TEST ID/${e.id!}").toList();
+  void selectAllFilesToDelete({required String id}) {
+    List<String> pathsToDelete = state.files.map((e) => "$id/${e.id!}").toList();
     emit(state.copyWith(filePathsToDelete: pathsToDelete));
   }
   //LIST FILES FROM STORAGE
@@ -66,40 +65,35 @@ class StorageCubit extends Cubit<StorageState> {
     uploadRequest.fold((l) => fail(l), (r) => pass(r));
   }
   // DELETE A FILE
-  void deleteFile()async{
+  void deleteFile({required String id})async{
     final file = state.supabaseFile;
     load();
     final uploadRequest = await iStorageFacade.deleteFile(path: file.name);
     uploadRequest.fold((l) => fail(l), (r) => pass(r));
-    listFiles(id: "TEST ID");
+    listFiles(id: id);
   }
   // DELETE MULTIPLE FILES
-  void deleteFiles()async{
+  void deleteFiles({required String id})async{
     List<String> pathsToDelete = state.filePathsToDelete;
     load();
     final uploadRequest = await iStorageFacade.deleteFiles(paths: pathsToDelete);
     uploadRequest.fold((l) => fail(l), (r) => pass(r));
-    listFiles(id: "TEST ID");
+    listFiles(id: id);
   }
   // CREATE A BYTES ARRAY OF THE FILE TO BE SAVED ON THE DEVICE
-  Future<Uint8List> downloadFile()async{
-    final id = state.supabaseFile.name;
-    Uint8List fileBytes = Uint8List.fromList([0]);
+  downloadFile({required void Function(int, int)? onReceiveProgress, required String path})async{
+    final url = getPublicUrl();
     load();
-    final uploadRequest = await iStorageFacade.downloadFile(path: "TEST ID/$id");
+    final uploadRequest = await iStorageFacade.downloadFile(path: path, onReceiveProgress: onReceiveProgress, url: url);
     uploadRequest.fold((l) => fail(l), (r) {
-      fileBytes = r;
-      pass("File downloaded");
+      pass("File downloaded from network");
     }
     );
-    return fileBytes;
   }
   // GETS A PUBLICLY VISIBLE URL OF THE FILE
   String getPublicUrl(){
     final id = state.supabaseFile.name;
-    final request = iStorageFacade.getPublicUrl(id: id);
-    String url = "";
-    request.fold((l) => fail(l), (r) => url = r);
+    final url = iStorageFacade.getPublicUrl(id: id);
     return url;
   }
 

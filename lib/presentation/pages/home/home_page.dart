@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
+        child: files.isNotEmpty ? SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: files.map((file) {
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
               );
             }).toList(),
           ),
-        ),
+        ) : Center(child: Text("You have no file stored", style: Theme.of(context).textTheme.titleMedium,)),
       ),
       floatingActionButton: SizedBox(
         width: 70,
