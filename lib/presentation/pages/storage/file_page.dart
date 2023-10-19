@@ -55,7 +55,7 @@ class Filepage extends StatelessWidget {
                     }
                 }}, path: downloadDirectory.path);
               },
-              icon: const Icon(Icons.file_download_rounded, color: kBlue))
+              icon: const Icon(Icons.file_download_rounded, color: kPrimary))
         ],
       ),
       body: SafeArea(

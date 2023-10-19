@@ -11,7 +11,7 @@ class AppDrawer extends StatelessWidget {
       // backgroundColor: kBlack.withOpacity(0.1),
       child: Column(
         children: [
-          const DrawerHeader(child: CircleAvatar(backgroundColor: kRed, radius: 50,)),
+          const DrawerHeader(child: CircleAvatar(backgroundColor: kPrimary, radius: 50,)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

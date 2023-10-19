@@ -119,8 +119,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
       _textControllers[i] = TextEditingController();
     }
 
-    return i != 3
-        ? Container(
+    return Container(
             width: widget.fieldWidth,
             height: widget.fieldHeight,
             margin: widget.margin,
@@ -175,73 +174,6 @@ class _OTPTextFieldState extends State<OTPTextField> {
                 widget.onChanged!(currentPin);
               },
             ),
-          )
-        : Row(
-            children: [
-              const Expanded(
-                  child: Divider(
-                indent: 2.0,
-                endIndent: 2.0,
-                thickness: 2.0,
-                color: kBlack,
-              )),
-              Container(
-                width: widget.fieldWidth,
-                height: widget.fieldHeight,
-                margin: widget.margin,
-                decoration: BoxDecoration(
-                    color: _otpFieldStyle.backgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(widget.outlineBorderRadius)),
-                child: TextField(
-                  controller: _textControllers[i],
-                  keyboardType: widget.keyboardType,
-                  textAlign: TextAlign.center,
-                  style: widget.style,
-                  focusNode: _focusNodes[i],
-                  obscureText: widget.obscureText,
-                  decoration: InputDecoration(
-                      counterText: "",
-                      border: inputBorder,
-                      focusedBorder: inputBorder,
-                      enabledBorder: inputBorder,
-                      disabledBorder: inputBorder,
-                      contentPadding: EdgeInsets.symmetric(vertical: widget.fieldHeight * 0.2),
-                      errorBorder: inputBorder),
-                  onChanged: (String str) {
-                    if (str.length > 1) {
-                      _handlePaste(str);
-                      return;
-                    }
-
-                    if (str.isEmpty) {
-                      if (i == 0) return;
-                      _focusNodes[i]!.unfocus();
-                      _focusNodes[i - 1]!.requestFocus();
-                    }
-
-                    setState(() {
-                      _pin[i] = str;
-                    });
-
-                    if (str.isNotEmpty) _focusNodes[i]!.unfocus();
-                    if (i + 1 != widget.length && str.isNotEmpty) {
-                      FocusScope.of(context).requestFocus(_focusNodes[i + 1]);
-                    }
-
-                    String currentPin = _getCurrentPin();
-
-                    if (!_pin.contains(null) &&
-                        !_pin.contains('') &&
-                        currentPin.length == widget.length) {
-                      widget.onCompleted!(currentPin);
-                    }
-
-                    widget.onChanged!(currentPin);
-                  },
-                ),
-              )
-            ],
           );
   }
 

@@ -25,7 +25,7 @@ class OnboardingScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text("Hanko Files", style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: kBlack),),
+          Text("Van-Files", style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: kBlack),),
           const SizedBox(
             height: 10,
           ),
@@ -50,7 +50,7 @@ class OnboardingScreen extends StatelessWidget {
               const SizedBox(height: 20,),
               AppButton(
                 width: width,
-                backgroundColor: kRed,
+                backgroundColor: kPrimary,
                 textColor: kWhite,
                 hasIcon: false,
                 title: "Register",

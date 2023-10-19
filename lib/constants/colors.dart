@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 const kWhite = Colors.white;
-const kRed = Color(0XFFFF2E4C);
+const kPrimary = Color(0XFF041fa3);
 const kBlack = Colors.black;
 const kBorderColor = Color(0XFFDEE3FF);
-const kBlue = Color(0xFF0905F1);
 
 final inputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),

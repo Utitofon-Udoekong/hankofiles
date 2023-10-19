@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hankofiles/constants/colors.dart';
+import 'package:hankofiles/presentation/pages/storage/cubit/storage_cubit.dart';
 import 'package:hankofiles/presentation/core/widgets/otp_field/otp_box_style.dart';
 import 'package:hankofiles/presentation/core/widgets/otp_field/otp_field_style.dart';
 import 'package:hankofiles/presentation/core/widgets/otp_field/otp_text_field.dart';
@@ -71,12 +72,14 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
         BlocListener<AuthCubit, AuthState>(
           listenWhen: (previous, current) => current.code.length == 6 && current.isLoading == false,
           listener: (context, state) {
-            // Future.delayed(const Duration(seconds: 1), () => context.read<AuthCubit>().verifyEmail());
+            Future.delayed(const Duration(seconds: 1), () => context.read<AuthCubit>().verifyEmail());
           },
         ),
         BlocListener<AuthCubit, AuthState>(
           listenWhen:(previous, current) => current.success == "User Verified",
           listener: (context, state) {
+            final id = state.userModel.id;
+            context.read<StorageCubit>().listFiles(id: id);
             Future.delayed(const Duration(seconds: 2), () => context.go("/home"));
             context.read<AuthCubit>().reset();
           },
@@ -98,34 +101,23 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                             ),
                             InkWell(
                                 onTap: () => context.pop(),
-                                child: const Icon(Icons.arrow_back)),
+                                child: Icon(Icons.adaptive.arrow_back)),
                             const SizedBox(
                               height: 20,
                             ),
-                            Text.rich(
-                              TextSpan(children: [
-                                TextSpan(
-                                    text: "Check your\n",
+                            Text(
+                                    "Check your inbox",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(color: Colors.black)),
-                                TextSpan(
-                                    text: "inbox",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(color: kRed)),
-                              ]),
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
                             const SizedBox(
                               height: 20,
                             ),
                             Text.rich(TextSpan(children: <TextSpan>[
                               TextSpan(
                                   text: "We just sent a ",
-                                  style: Theme.of(context).textTheme.bodySmall),
+                                  style: Theme.of(context).textTheme.bodyMedium),
                               TextSpan(
                                   text: "6-digit ",
                                   style: Theme.of(context)

@@ -67,11 +67,11 @@ class _UploadFilePageState extends State<UploadFilePage> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: kBlue)),
+                    border: Border.all(color: kPrimary)),
                 height: 100,
                 alignment: Alignment.center,
                 child: AppButton(
-                  backgroundColor: kBlue,
+                  backgroundColor: kPrimary,
                   textColor: kWhite,
                   hasIcon: true,
                   icon: Icons.upload_file_rounded,

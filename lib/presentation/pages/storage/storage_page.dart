@@ -21,7 +21,8 @@ class _StoragePageState extends State<StoragePage> {
   @override
   void initState() {
     super.initState();
-    context.read<StorageCubit>().listFiles(id: "TEST ID");
+    final id = context.read<AuthCubit>().state.userModel.id;
+    context.read<StorageCubit>().listFiles(id: id);
   }
 
   @override
@@ -65,7 +66,7 @@ class _StoragePageState extends State<StoragePage> {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                  color: kBlue,
+                                  color: kPrimary,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Text(
                                 "Select All",
@@ -85,7 +86,7 @@ class _StoragePageState extends State<StoragePage> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              color: kRed,
+                              color: kPrimary,
                               borderRadius: BorderRadius.circular(10)),
                           child: Text(
                             "Delete",

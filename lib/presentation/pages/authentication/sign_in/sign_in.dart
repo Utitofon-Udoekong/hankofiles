@@ -6,6 +6,7 @@ import 'package:hankofiles/constants/methods.dart';
 import 'package:hankofiles/presentation/core/widgets/app_button.dart';
 import 'package:hankofiles/presentation/core/widgets/app_form_field.dart';
 import 'package:hankofiles/presentation/core/widgets/app_loader.dart';
+import 'package:hankofiles/presentation/pages/storage/cubit/storage_cubit.dart';
 import 'package:hankofiles/presentation/core/widgets/app_snackbar.dart';
 import 'package:hankofiles/presentation/pages/authentication/cubit/auth_cubit.dart';
 import 'package:hankofiles/presentation/pages/splash/widgets/hero_image.dart';
@@ -30,7 +31,10 @@ class SignInPage extends StatelessWidget {
           listenWhen: (previous, current) => current.success == "User logged in successfully",
           listener: (context, state) {
             AppSnackbar.showSnackBar(context, state.success, false);
+            final id = state.userModel.id;
+            context.read<StorageCubit>().listFiles(id: id);
             context.go("/home");
+            context.read<AuthCubit>().reset();
           },
         ),
       ],

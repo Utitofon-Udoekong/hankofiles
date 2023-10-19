@@ -75,7 +75,7 @@ class _ApploaderState extends State<Apploader> with SingleTickerProviderStateMix
         if(widget.isLoading) ... [
           Opacity(
             opacity: 0.8,
-            child: ModalBarrier(dismissible: false, color: kRed.withOpacity(0.4)),
+            child: ModalBarrier(dismissible: false, color: kPrimary.withOpacity(0.4)),
           ),
           Center(
             child: SizedBox.fromSize(

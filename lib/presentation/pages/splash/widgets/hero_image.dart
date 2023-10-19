@@ -6,6 +6,6 @@ class HeroImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("images/logo.png", width: width / 1.2,);
+    return Center(child: Image.asset("images/logo.png", width: width / 2,));
   }
 }

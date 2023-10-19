@@ -25,7 +25,7 @@ class FolderCard extends StatelessWidget {
     return ListTile(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         tileColor: color.withOpacity(0.1),
-        selectedTileColor: kBlue,
+        selectedTileColor: kPrimary,
         onLongPress: onLongPress,
         onTap: onTap,
         leading: Icon(getIconDataFromMimeType(mimeType), color: color),

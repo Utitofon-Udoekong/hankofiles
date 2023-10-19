@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<StorageCubit>().listFiles(id: "TEST ID");
+    
   }
 
   _onSearchChanged(String query) {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(Uri.base.path,
+        title: Text("Van Files",
             style: Theme.of(context).textTheme.titleLarge),
         actions: [
           IconButton(
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
         height: 70,
         child: FittedBox(
           child: FloatingActionButton(
-              backgroundColor: kRed,
+              backgroundColor: kPrimary,
               child: const Icon(
                 Icons.add,
                 color: kWhite,
