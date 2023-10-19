@@ -21,3 +21,19 @@ Map<String, dynamic> _$$PasscodeResponseImplToJson(
       'id': instance.id,
       'ttl': instance.ttl,
     };
+
+_$UserFromEmailImpl _$$UserFromEmailImplFromJson(Map<String, dynamic> json) =>
+    _$UserFromEmailImpl(
+      email_id: json['email_id'] as String,
+      has_webauthn_credential: json['has_webauthn_credential'] as bool,
+      id: json['id'] as String,
+      verified: json['verified'] as bool,
+    );
+
+Map<String, dynamic> _$$UserFromEmailImplToJson(_$UserFromEmailImpl instance) =>
+    <String, dynamic>{
+      'email_id': instance.email_id,
+      'has_webauthn_credential': instance.has_webauthn_credential,
+      'id': instance.id,
+      'verified': instance.verified,
+    };

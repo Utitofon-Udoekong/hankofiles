@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Hankofiles",
+        title: Text(Uri.base.path,
             style: Theme.of(context).textTheme.titleLarge),
         actions: [
           IconButton(

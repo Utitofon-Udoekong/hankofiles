@@ -50,7 +50,6 @@ class SignInPage extends StatelessWidget {
                 hintText: "Enter your email address",
                 onChanged: (email) => context.read<AuthCubit>().setEmail(email),
               ),
-              Text("${isValidEmail(email)}"),
               const SizedBox(height: 20),
               AppButton(
                   width: width,

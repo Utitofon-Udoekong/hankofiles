@@ -200,3 +200,208 @@ abstract class _PasscodeResponse implements PasscodeResponse {
   _$$PasscodeResponseImplCopyWith<_$PasscodeResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UserFromEmail _$UserFromEmailFromJson(Map<String, dynamic> json) {
+  return _UserFromEmail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserFromEmail {
+  String get email_id => throw _privateConstructorUsedError;
+  bool get has_webauthn_credential => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  bool get verified => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserFromEmailCopyWith<UserFromEmail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserFromEmailCopyWith<$Res> {
+  factory $UserFromEmailCopyWith(
+          UserFromEmail value, $Res Function(UserFromEmail) then) =
+      _$UserFromEmailCopyWithImpl<$Res, UserFromEmail>;
+  @useResult
+  $Res call(
+      {String email_id,
+      bool has_webauthn_credential,
+      String id,
+      bool verified});
+}
+
+/// @nodoc
+class _$UserFromEmailCopyWithImpl<$Res, $Val extends UserFromEmail>
+    implements $UserFromEmailCopyWith<$Res> {
+  _$UserFromEmailCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email_id = null,
+    Object? has_webauthn_credential = null,
+    Object? id = null,
+    Object? verified = null,
+  }) {
+    return _then(_value.copyWith(
+      email_id: null == email_id
+          ? _value.email_id
+          : email_id // ignore: cast_nullable_to_non_nullable
+              as String,
+      has_webauthn_credential: null == has_webauthn_credential
+          ? _value.has_webauthn_credential
+          : has_webauthn_credential // ignore: cast_nullable_to_non_nullable
+              as bool,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      verified: null == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UserFromEmailImplCopyWith<$Res>
+    implements $UserFromEmailCopyWith<$Res> {
+  factory _$$UserFromEmailImplCopyWith(
+          _$UserFromEmailImpl value, $Res Function(_$UserFromEmailImpl) then) =
+      __$$UserFromEmailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String email_id,
+      bool has_webauthn_credential,
+      String id,
+      bool verified});
+}
+
+/// @nodoc
+class __$$UserFromEmailImplCopyWithImpl<$Res>
+    extends _$UserFromEmailCopyWithImpl<$Res, _$UserFromEmailImpl>
+    implements _$$UserFromEmailImplCopyWith<$Res> {
+  __$$UserFromEmailImplCopyWithImpl(
+      _$UserFromEmailImpl _value, $Res Function(_$UserFromEmailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email_id = null,
+    Object? has_webauthn_credential = null,
+    Object? id = null,
+    Object? verified = null,
+  }) {
+    return _then(_$UserFromEmailImpl(
+      email_id: null == email_id
+          ? _value.email_id
+          : email_id // ignore: cast_nullable_to_non_nullable
+              as String,
+      has_webauthn_credential: null == has_webauthn_credential
+          ? _value.has_webauthn_credential
+          : has_webauthn_credential // ignore: cast_nullable_to_non_nullable
+              as bool,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      verified: null == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserFromEmailImpl implements _UserFromEmail {
+  const _$UserFromEmailImpl(
+      {required this.email_id,
+      required this.has_webauthn_credential,
+      required this.id,
+      required this.verified});
+
+  factory _$UserFromEmailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserFromEmailImplFromJson(json);
+
+  @override
+  final String email_id;
+  @override
+  final bool has_webauthn_credential;
+  @override
+  final String id;
+  @override
+  final bool verified;
+
+  @override
+  String toString() {
+    return 'UserFromEmail(email_id: $email_id, has_webauthn_credential: $has_webauthn_credential, id: $id, verified: $verified)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserFromEmailImpl &&
+            (identical(other.email_id, email_id) ||
+                other.email_id == email_id) &&
+            (identical(
+                    other.has_webauthn_credential, has_webauthn_credential) ||
+                other.has_webauthn_credential == has_webauthn_credential) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.verified, verified) ||
+                other.verified == verified));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, email_id, has_webauthn_credential, id, verified);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserFromEmailImplCopyWith<_$UserFromEmailImpl> get copyWith =>
+      __$$UserFromEmailImplCopyWithImpl<_$UserFromEmailImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserFromEmailImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserFromEmail implements UserFromEmail {
+  const factory _UserFromEmail(
+      {required final String email_id,
+      required final bool has_webauthn_credential,
+      required final String id,
+      required final bool verified}) = _$UserFromEmailImpl;
+
+  factory _UserFromEmail.fromJson(Map<String, dynamic> json) =
+      _$UserFromEmailImpl.fromJson;
+
+  @override
+  String get email_id;
+  @override
+  bool get has_webauthn_credential;
+  @override
+  String get id;
+  @override
+  bool get verified;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserFromEmailImplCopyWith<_$UserFromEmailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

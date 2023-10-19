@@ -20,39 +20,17 @@ abstract class PasscodeResponse with _$PasscodeResponse {
   factory PasscodeResponse.fromJson(Map<String, dynamic> json) => _$PasscodeResponseFromJson(json);
 }
 
-class UserFromEmail {
-  final String email_id;
-  final bool has_webauthn_credential;
-  final String id;
-  final bool verified;
-  UserFromEmail({
-    required this.email_id,
-    required this.has_webauthn_credential,
-    required this.id,
-    required this.verified
-});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'email_id': email_id,
-      'has_webauthn_credential': has_webauthn_credential,
-      'id': id,
-      'verified': verified,
-    };
-  }
-
-  factory UserFromEmail.fromMap(Map<String, dynamic> map) {
-    return UserFromEmail(
-      email_id: map['email_id'] ?? '',
-      has_webauthn_credential: map['has_webauthn_credential'] ?? false,
-      id: map['id'] ?? '',
-      verified: map['verified'] ?? false,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserFromEmail.fromJson(String source) => UserFromEmail.fromMap(json.decode(source));
+@freezed
+abstract class UserFromEmail with _$UserFromEmail {
+  const factory UserFromEmail({
+    required String email_id,
+    required bool has_webauthn_credential,
+    required String id,
+    required bool verified,
+  }) = _UserFromEmail;
+  
+  factory UserFromEmail.empty() => const UserFromEmail(email_id: '', has_webauthn_credential: false, id: '', verified: false);
+  factory UserFromEmail.fromJson(Map<String, dynamic> json) => _$UserFromEmailFromJson(json);
 }
 
 
