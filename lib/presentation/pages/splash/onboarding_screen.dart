@@ -30,7 +30,7 @@ class OnboardingScreen extends StatelessWidget {
             height: 10,
           ),
           Text(
-              "Best cloud storage platform for all business and individuals to manage there data", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: kBlack)),
+              "Best cloud storage platform for all business and individuals to manage their data", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: kBlack)),
           const SizedBox(
             height: 20,
           ),
