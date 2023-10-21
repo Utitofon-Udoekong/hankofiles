@@ -37,14 +37,12 @@ class AuthFacade implements IAuthFacade{
       response = await dio.post('/users', data: {
         "email": email
       } );
-
+      print(response.requestOptions.baseUrl);
       final data = response.data;
       print(data);
       final getPassCode = await initializePasscodeLogin(email_id: data["email_id"], user_id: data["user_id"]);
       if(getPassCode.isRight()){
         getPassCode.fold((l) => null, (r) {
-          print("r");
-          print(r);
           passcodeResponse = r;
         });
       }
@@ -60,7 +58,6 @@ class AuthFacade implements IAuthFacade{
     Response response;
     try {
       response = await dio.get("/me");
-      print(response.data);
       return right(response.data);
     } on DioException catch (e) {
      return left(handleExceptions(e));
@@ -76,8 +73,6 @@ class AuthFacade implements IAuthFacade{
         "email": email
       });
       final data = response.data;
-      print("email");
-      print(data);
       final user = UserFromEmail.fromJson(data);
       return right(user);
     } on DioException catch (e) {
@@ -91,7 +86,6 @@ class AuthFacade implements IAuthFacade{
     Response response;
     try {
       response = await dio.get("/users/$id");
-      print(response.data);
       return right(response.data);
     } on DioException catch (e) {
       return left(handleExceptions(e));
@@ -104,7 +98,6 @@ class AuthFacade implements IAuthFacade{
     Response response;
     try {
       response = await dio.post("/logout");
-      print(response.data);
       return right("Logged out");
     } on DioException catch (e) {
      return left(handleExceptions(e));
@@ -121,11 +114,7 @@ class AuthFacade implements IAuthFacade{
         "user_id": user_id
       });
       final data = response.data;
-      print("passcode data");
-      print(data);
       final passcodeResponse = PasscodeResponse.fromJson(data);
-      print(passcodeResponse);
-         print("passcode data end");
       return right(passcodeResponse);
     } on DioException catch (e) {
       return left(handleExceptions(e));
@@ -142,7 +131,6 @@ class AuthFacade implements IAuthFacade{
         "id": id
       });
       final data = response.data;
-      print(data);
       final passcodeResponse = PasscodeResponse.fromJson(data);
       return right(passcodeResponse);
     } on DioException catch (e) {
