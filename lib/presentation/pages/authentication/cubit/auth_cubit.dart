@@ -53,8 +53,12 @@ class AuthCubit extends Cubit<AuthState> {
     final code = state.code;
     final uid = state.passcodeResponse.id;
     final request = await iAuthFacade.finalizePasscodeLogin(id: uid, code: code);
-    request.fold((l) => fail(l), (r) {
+    request.fold((l) => fail(l), (r) async{
       emit(state.copyWith(passcodeResponse: r));
+      final requestUser = await iAuthFacade.getUserByID(id: uid);
+      requestUser.fold((l) => fail(l), (r) {
+        emit(state.copyWith(userModel: r));
+      });
       pass("User Verified");
     });
   }

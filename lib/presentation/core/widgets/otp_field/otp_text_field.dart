@@ -170,8 +170,9 @@ class _OTPTextFieldState extends State<OTPTextField> {
                     currentPin.length == widget.length) {
                   widget.onCompleted!(currentPin);
                 }
-
-                widget.onChanged!(currentPin);
+                if(widget.onChanged != null){
+                  widget.onChanged!(currentPin);
+                }
               },
             ),
           );
