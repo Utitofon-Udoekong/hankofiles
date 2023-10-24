@@ -22,7 +22,7 @@ class _UploadFilePageState extends State<UploadFilePage> {
   bool addToFolder = false;
   @override
   Widget build(BuildContext context) {
-    final uid = context.select((AuthCubit bloc) => bloc.state.userModel.id);
+    final uid = context.select((AuthCubit bloc) => bloc.state.userFromEmail.id);
     final size = MediaQuery.of(context).size;
     final isLoading =
         context.select((StorageCubit bloc) => bloc.state.isLoading);
@@ -47,9 +47,10 @@ class _UploadFilePageState extends State<UploadFilePage> {
         BlocListener<StorageCubit, StorageState>(
           listenWhen: (p,c) => c.success == "File uploaded",
           listener: (context, state) {
+            final id = context.read<AuthCubit>().state.userFromEmail.id;
             AppSnackbar.showSnackBar(context, state.success, false);
             context.read<StorageCubit>().reset();
-            context.read<StorageCubit>().listFiles(id: "TEST ID");
+            context.read<StorageCubit>().listFiles(id: id);
             context.pop();
           },
         ),
@@ -78,7 +79,7 @@ class _UploadFilePageState extends State<UploadFilePage> {
                   width: size.width,
                   title: selectedFile.path.isNotEmpty
                       ? "File selected"
-                      : "Choose a file to upload",
+                      : "Select file",
                   disabled: false,
                   onPressed: () async {
                     FilePickerResult? result =

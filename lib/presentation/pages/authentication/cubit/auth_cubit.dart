@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hankofiles/domain/facades/i_auth_facade.dart';
 import 'package:hankofiles/domain/models/responses/response_models.dart';
-import 'package:hankofiles/domain/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_cubit.freezed.dart';
@@ -20,21 +19,16 @@ class AuthCubit extends Cubit<AuthState> {
   void setCode (String code) => emit(state.copyWith(code: code));
 
   //FUNCTION TO SIGN IN A USER
+  /// Sends a request to the getUserByEmail endpoint and saves the resulting value in storage
   void signIn () async{
     final email = state.email.trim();
     load();
     // GETS A USER BY THE ENTERED EMAIL TO RETURN THE USER ID. tHE ID WILL BE USED TO GET THE USER OBJECT.
     final getEmailResponse = await iAuthFacade.getUserByEmail(email: email);
-    if(getEmailResponse.isRight()){
-      UserFromEmail? emailResponse = getEmailResponse.fold((l) => null, (r) => r);
-      final requestUser = await iAuthFacade.getUserByID(id: emailResponse!.id);
-      requestUser.fold((l) => fail(l), (r) {
-        emit(state.copyWith(userModel: r));
-        pass("User logged in successfully");
-      });
-    }else{
-      getEmailResponse.fold((l) => fail(l), (r) => null);
-    }
+    getEmailResponse.fold((l) => fail(l), (r) async {
+      emit(state.copyWith(userFromEmail: r));
+      pass("User logged in successfully");
+    });
   }
 
   // FUNCTION TO CREATE A USER ON THE HANKO SERVER
@@ -43,26 +37,34 @@ class AuthCubit extends Cubit<AuthState> {
     load();
     final request = await iAuthFacade.createUser(email: email);
     request.fold((l) => fail(l), (r) {
-      emit(state.copyWith(passcodeResponse: r));
+      emit(state.copyWith(passcodeResponse: r.passcodeResponse, userFromSignup: r.userFromSignup));
       pass("OTP Sent");
     });
   }
 
-  // FUNCTION TO VERIFY A USERS EMAIL AFTER SIGNUP
+  /// FUNCTION TO VERIFY A USERS EMAIL AFTER SIGNUP
+  /// Use the passcode response id gotten from the initialize passcode endpoint to verify the email.
+  ///Get the user from the verified email and save to storage
+  
   void verifyEmail() async {
     final code = state.code;
-    final uid = state.passcodeResponse.id;
-    final request = await iAuthFacade.finalizePasscodeLogin(id: uid, code: code);
-    request.fold((l) => fail(l), (r) {
-      emit(state.copyWith(passcodeResponse: r));
-      pass("User Verified");
+    final passcodeId = state.passcodeResponse.id;
+    final email = state.email.trim();
+    load();
+    final request = await iAuthFacade.finalizePasscodeLogin(id: passcodeId, code: code);
+    request.fold((l) => fail(l), (r) async {
+      final getUser = await iAuthFacade.getUserByEmail(email: email);
+      getUser.fold((l) => fail(l), (r) {
+        emit(state.copyWith(userFromEmail: r));
+        pass("User created successfully");
+      });
     });
   }
 
   // FUNCTION TO STORE FAILURES
-  void fail(failure) => emit(state.copyWith(success: "", failure: failure, isLoading: false));
+  void fail(failure) => emit(state.copyWith(success: "", failure: failure, isLoading: false, code: ""));
   // FUNCTION TO STORE SUCCESSES
-  void pass(success) => emit(state.copyWith(success: success, failure: "", isLoading: false));
+  void pass(success) => emit(state.copyWith(success: success, failure: "", isLoading: false, code: ""));
   // FUNCTION TO SET LOADING STATE
   void load() => emit(state.copyWith(success: "", failure: "", isLoading: true));
   // FUNCTION TO RESET THE CUBIT
@@ -70,5 +72,8 @@ class AuthCubit extends Cubit<AuthState> {
         failure: '',
         success: '',
         isLoading: false,
-        code: ''));
+        code: '',
+        email: '',
+        userFromSignup: UserFromSignup.empty(),
+        passcodeResponse: PasscodeResponse.empty()));
 }

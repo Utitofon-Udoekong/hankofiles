@@ -71,6 +71,7 @@ class StorageFacade implements IStorageFacade{
   /// return a list of FileObject stored in supabase
   @override
   Future<Either<String, List<FileObject>>> listFiles({required String id}) async{
+    /// TODO: FIX NO ID IS BEING PASSED
     try {
       final files = await supabase.client.storage.from("hanko-files").list(path: id, searchOptions: const SearchOptions(sortBy: SortBy(column: "created_at", order: "desc")));
       return right(files);
@@ -82,6 +83,6 @@ class StorageFacade implements IStorageFacade{
   
   /// Retuurns a live url to use for download operations.
   @override
-  String getPublicUrl({required String id}) => supabase.client.storage.from("hanko-files").getPublicUrl("TEST ID/$id");
+  String getPublicUrl({required String id}) => supabase.client.storage.from("hanko-files").getPublicUrl(id);
 
 }

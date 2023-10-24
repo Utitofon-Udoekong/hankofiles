@@ -4,7 +4,7 @@ import 'package:hankofiles/domain/models/user_model.dart';
 
 abstract class IAuthFacade{
   Future<Either<String,UserFromEmail>> getUserByEmail({required String email});
-  Future<Either<String,PasscodeResponse>> createUser({required String email});
+  Future<Either<String,UserSignupDTO>> createUser({required String email});
   Future<Either<String,UserModel>> getUserByID({required String id});
   Future<Either<String,String>> getCurrentUserID({required String cookie});
   Future<Either<String,String>> logout({required String cookie});

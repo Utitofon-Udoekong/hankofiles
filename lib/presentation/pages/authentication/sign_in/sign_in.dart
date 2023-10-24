@@ -31,7 +31,8 @@ class SignInPage extends StatelessWidget {
           listenWhen: (previous, current) => current.success == "User logged in successfully",
           listener: (context, state) {
             AppSnackbar.showSnackBar(context, state.success, false);
-            final id = state.userModel.id;
+            final id = state.userFromEmail.id;
+            print(id);
             context.read<StorageCubit>().listFiles(id: id);
             context.go("/home");
             context.read<AuthCubit>().reset();

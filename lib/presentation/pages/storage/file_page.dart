@@ -31,17 +31,24 @@ class Filepage extends StatelessWidget {
                 ?.copyWith(color: kBlack)),
         actions: [
           IconButton(
+            //GET DOCUMENTS DIRECTORY
               onPressed: () async {
                 final downloadDirectory = await getApplicationDocumentsDirectory();
+                //SHOW PROGRESS DIALOG
                 pd.show(max: 100, msg: 'File Downloading...', closeWithDelay: 1500);
+                //START DOWNLOAD
                 await context.read<StorageCubit>().downloadFile(onReceiveProgress: (received, total) async {
+                //GET DOWNLOADS DIRECTORY
                 final downloadsDirectory = await getDownloadsDirectory();
                   if (total != -1) {
                     if (received == total) {
                       pd.update(value: 100, msg: "File downloaded");
+                      //GET DOWNLOAD URL
                       var url = context.read<StorageCubit>().getPublicUrl();
+                      //CREATE FILE PATH ON DEVICE
                       String filePath = "${downloadsDirectory!.path}/${url.split('/').last}";
                       try {
+                        // SAVE FILE WHEN DONE
                         File("${downloadDirectory.path}/${url.split('/').last}").copy(filePath);
                         AppSnackbar.showSnackBar(context, "File saved to $filePath", false);
                       } catch(e) {
@@ -50,6 +57,7 @@ class Filepage extends StatelessWidget {
                       }
 
                     } else if (received < total) {
+                      //UPDATE DOWNLOAD PROGRESS
                       int progress = (((received / total) * 100).toInt());
                       pd.update(value: progress);
                     }
@@ -68,7 +76,7 @@ class Filepage extends StatelessWidget {
               placeholder: "images/loading-image.gif",
               image: getImageFromMimeType(fileType,context.read<StorageCubit>().getPublicUrl()),
               width: mediaSize.width,
-              height: 300,
+              height: 200,
             ),
             const SizedBox(height: 20),
             Text(

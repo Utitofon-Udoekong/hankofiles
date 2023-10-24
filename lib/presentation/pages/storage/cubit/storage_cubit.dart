@@ -61,7 +61,7 @@ class StorageCubit extends Cubit<StorageState> {
     final fileName = state.fileName;
     Either<String, String> uploadRequest;
     load();
-      uploadRequest = await iStorageFacade.uploadFile(file: file, id: id, fileName: fileName);
+    uploadRequest = await iStorageFacade.uploadFile(file: file, id: id, fileName: fileName);
     uploadRequest.fold((l) => fail(l), (r) => pass(r));
   }
   // DELETE A FILE
@@ -92,8 +92,9 @@ class StorageCubit extends Cubit<StorageState> {
   }
   // GETS A PUBLICLY VISIBLE URL OF THE FILE
   String getPublicUrl(){
-    final id = state.supabaseFile.name;
-    final url = iStorageFacade.getPublicUrl(id: id);
+    final id = state.supabaseFile.id;
+    final name = state.supabaseFile.name;
+    final url = iStorageFacade.getPublicUrl(id:"$id/$name");
     return url;
   }
 

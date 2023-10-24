@@ -76,9 +76,9 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
           },
         ),
         BlocListener<AuthCubit, AuthState>(
-          listenWhen:(previous, current) => current.success == "User Verified",
+          listenWhen:(previous, current) => current.success == "User created successfully",
           listener: (context, state) {
-            final id = state.userModel.id;
+            final id = state.userFromEmail.id;
             context.read<StorageCubit>().listFiles(id: id);
             Future.delayed(const Duration(seconds: 2), () => context.go("/home"));
             context.read<AuthCubit>().reset();

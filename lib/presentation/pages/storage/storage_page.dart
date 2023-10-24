@@ -21,13 +21,13 @@ class _StoragePageState extends State<StoragePage> {
   @override
   void initState() {
     super.initState();
-    final id = context.read<AuthCubit>().state.userModel.id;
+    final id = context.read<AuthCubit>().state.userFromEmail.id;
     context.read<StorageCubit>().listFiles(id: id);
   }
 
   @override
   Widget build(BuildContext context) {
-    final uid = context.select((AuthCubit bloc) => bloc.state.userModel.id);
+    final uid = context.select((AuthCubit bloc) => bloc.state.userFromEmail.id);
     final files = context.select((StorageCubit bloc) => bloc.state.files);
     final isLoading =
         context.select((StorageCubit bloc) => bloc.state.isLoading);
@@ -48,87 +48,111 @@ class _StoragePageState extends State<StoragePage> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                filesToDelete.isNotEmpty ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+                /// TOOLBAR WITH DELETE CONTROLS
+                filesToDelete.isNotEmpty
+                    ? Column(
                         children: [
-                          Text("Selected: ${filesToDelete.length}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(color: kBlack)),
-                          const SizedBox(width: 10),
-                          GestureDetector(
-                            onTap: () => context
-                                .read<StorageCubit>()
-                                .selectAllFilesToDelete(id: uid),
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: kPrimary,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text(
-                                "Select All",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(color: kWhite),
-                              ),
-                            ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("Selected: ${filesToDelete.length}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.copyWith(color: kBlack)),
+                                    const SizedBox(width: 10),
+                                    GestureDetector(
+                                      onTap: () => context
+                                          .read<StorageCubit>()
+                                          .selectAllFilesToDelete(id: uid),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            color: kPrimary,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Text(
+                                          "Select All",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium
+                                              ?.copyWith(color: kWhite),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () => filesToDelete.isNotEmpty
+                                      ? context
+                                          .read<StorageCubit>()
+                                          .deleteFiles(id: uid)
+                                      : context
+                                          .read<StorageCubit>()
+                                          .deleteFile(id: uid),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: kPrimary,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Text(
+                                      "Delete",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(color: kWhite),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                          const SizedBox(
+                            height: 20,
                           ),
                         ],
-                      ),
-                      GestureDetector(
-                        onTap: () => filesToDelete.isNotEmpty
-                            ? context.read<StorageCubit>().deleteFiles(id: uid)
-                            : context.read<StorageCubit>().deleteFile(id: uid),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: kPrimary,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Text(
-                            "Delete",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(color: kWhite),
-                          ),
-                        ),
                       )
-                    ]) : const SizedBox.shrink(),
-                const SizedBox(
-                  height: 20,
-                ),
-                files.isNotEmpty ? SingleChildScrollView(
-                  child: Column(
-                      children: files.map((file) {
-                    return Column(
-                      children: [
-                        FolderCard(
-                          onTap: filesToDelete.isNotEmpty
-                              ? () => context
-                                  .read<StorageCubit>()
-                                  .selectFilesToDelete("TEST ID/${file.id}")
-                              : (){
-                                context.read<StorageCubit>().selectSupabaseFile(file);
-                                context.push("/file");
-                              },
-                          onLongPress: () => context
-                              .read<StorageCubit>()
-                              .selectFilesToDelete("TEST ID/${file.id}"),
-                          color: pickerColors[
-                              Random().nextInt(pickerColors.length)],
-                          title: file.name,
-                          createdAt: file.createdAt!,
-                          mimeType: file.metadata!["mimetype"] ?? "application",
-                        ),
-                        const SizedBox(height: 20)
-                      ],
-                    );
-                  }).toList()),
-                ) : Center(child: Text("You have no file stored", style: Theme.of(context).textTheme.titleMedium,)),
+                    : const SizedBox.shrink(),
+
+                //RENDERS FILE LIST IF NOT EMPTY
+                files.isNotEmpty
+                    ? SingleChildScrollView(
+                        child: Column(
+                            children: files.map((file) {
+                          return Column(
+                            children: [
+                              FolderCard(
+                                onTap: filesToDelete.isNotEmpty
+                                    ? () => context
+                                        .read<StorageCubit>()
+                                        .selectFilesToDelete("$uid/${file.id}")
+                                    : () {
+                                        context
+                                            .read<StorageCubit>()
+                                            .selectSupabaseFile(file);
+                                        context.push("/file");
+                                      },
+                                onLongPress: () => context
+                                    .read<StorageCubit>()
+                                    .selectFilesToDelete("$uid/${file.id}"),
+                                color: pickerColors[
+                                    Random().nextInt(pickerColors.length)],
+                                title: file.name,
+                                createdAt: file.createdAt!,
+                                mimeType:
+                                    file.metadata!["mimetype"] ?? "application",
+                              ),
+                              const SizedBox(height: 20)
+                            ],
+                          );
+                        }).toList()),
+                      )
+                    : Center(
+                        child: Text(
+                        "You have no file stored",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      )),
               ],
             ),
           ),

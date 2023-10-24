@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                     color:
                         pickerColors[Random().nextInt(pickerColors.length)],
                     title: file.name,
-                    createdAt: file.createdAt!,
+                    createdAt: file.createdAt ?? "",
                     mimeType: file.metadata!["mimetype"] ?? "application",
                   ),
                   const SizedBox(height: 20)

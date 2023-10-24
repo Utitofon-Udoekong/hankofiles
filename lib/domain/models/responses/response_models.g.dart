@@ -37,3 +37,32 @@ Map<String, dynamic> _$$UserFromEmailImplToJson(_$UserFromEmailImpl instance) =>
       'id': instance.id,
       'verified': instance.verified,
     };
+
+_$UserFromSignupImpl _$$UserFromSignupImplFromJson(Map<String, dynamic> json) =>
+    _$UserFromSignupImpl(
+      email_id: json['email_id'] as String,
+      id: json['id'] as String,
+      user_id: json['user_id'] as String,
+    );
+
+Map<String, dynamic> _$$UserFromSignupImplToJson(
+        _$UserFromSignupImpl instance) =>
+    <String, dynamic>{
+      'email_id': instance.email_id,
+      'id': instance.id,
+      'user_id': instance.user_id,
+    };
+
+_$UserSignupDTOImpl _$$UserSignupDTOImplFromJson(Map<String, dynamic> json) =>
+    _$UserSignupDTOImpl(
+      userFromSignup: UserFromSignup.fromJson(
+          json['userFromSignup'] as Map<String, dynamic>),
+      passcodeResponse: PasscodeResponse.fromJson(
+          json['passcodeResponse'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$UserSignupDTOImplToJson(_$UserSignupDTOImpl instance) =>
+    <String, dynamic>{
+      'userFromSignup': instance.userFromSignup,
+      'passcodeResponse': instance.passcodeResponse,
+    };

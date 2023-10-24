@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:hankofiles/constants/methods.dart';
+import 'package:hankofiles/domain/models/user_model.dart';
 
 part 'response_models.freezed.dart';
 part 'response_models.g.dart';
@@ -31,6 +32,29 @@ abstract class UserFromEmail with _$UserFromEmail {
   
   factory UserFromEmail.empty() => const UserFromEmail(email_id: '', has_webauthn_credential: false, id: '', verified: false);
   factory UserFromEmail.fromJson(Map<String, dynamic> json) => _$UserFromEmailFromJson(json);
+}
+
+@freezed
+abstract class UserFromSignup with _$UserFromSignup {
+  const factory UserFromSignup({
+    required String email_id,
+    required String id,
+    required String user_id,
+  }) = _UserFromSignup;
+  
+  factory UserFromSignup.empty() => const UserFromSignup(email_id: '', user_id: '', id: '');
+  factory UserFromSignup.fromJson(Map<String, dynamic> json) => _$UserFromSignupFromJson(json);
+}
+
+@freezed
+abstract class UserSignupDTO with _$UserSignupDTO {
+  const factory UserSignupDTO({
+    required UserFromSignup userFromSignup,
+    required PasscodeResponse passcodeResponse,
+  }) = _UserSignupDTO;
+  
+  factory UserSignupDTO.empty() => UserSignupDTO(userFromSignup: UserFromSignup.empty(), passcodeResponse: PasscodeResponse.empty());
+  factory UserSignupDTO.fromJson(Map<String, dynamic> json) => _$UserSignupDTOFromJson(json);
 }
 
 

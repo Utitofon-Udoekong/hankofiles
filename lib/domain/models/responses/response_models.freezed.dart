@@ -405,3 +405,359 @@ abstract class _UserFromEmail implements UserFromEmail {
   _$$UserFromEmailImplCopyWith<_$UserFromEmailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UserFromSignup _$UserFromSignupFromJson(Map<String, dynamic> json) {
+  return _UserFromSignup.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserFromSignup {
+  String get email_id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get user_id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserFromSignupCopyWith<UserFromSignup> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserFromSignupCopyWith<$Res> {
+  factory $UserFromSignupCopyWith(
+          UserFromSignup value, $Res Function(UserFromSignup) then) =
+      _$UserFromSignupCopyWithImpl<$Res, UserFromSignup>;
+  @useResult
+  $Res call({String email_id, String id, String user_id});
+}
+
+/// @nodoc
+class _$UserFromSignupCopyWithImpl<$Res, $Val extends UserFromSignup>
+    implements $UserFromSignupCopyWith<$Res> {
+  _$UserFromSignupCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email_id = null,
+    Object? id = null,
+    Object? user_id = null,
+  }) {
+    return _then(_value.copyWith(
+      email_id: null == email_id
+          ? _value.email_id
+          : email_id // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      user_id: null == user_id
+          ? _value.user_id
+          : user_id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UserFromSignupImplCopyWith<$Res>
+    implements $UserFromSignupCopyWith<$Res> {
+  factory _$$UserFromSignupImplCopyWith(_$UserFromSignupImpl value,
+          $Res Function(_$UserFromSignupImpl) then) =
+      __$$UserFromSignupImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String email_id, String id, String user_id});
+}
+
+/// @nodoc
+class __$$UserFromSignupImplCopyWithImpl<$Res>
+    extends _$UserFromSignupCopyWithImpl<$Res, _$UserFromSignupImpl>
+    implements _$$UserFromSignupImplCopyWith<$Res> {
+  __$$UserFromSignupImplCopyWithImpl(
+      _$UserFromSignupImpl _value, $Res Function(_$UserFromSignupImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email_id = null,
+    Object? id = null,
+    Object? user_id = null,
+  }) {
+    return _then(_$UserFromSignupImpl(
+      email_id: null == email_id
+          ? _value.email_id
+          : email_id // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      user_id: null == user_id
+          ? _value.user_id
+          : user_id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserFromSignupImpl implements _UserFromSignup {
+  const _$UserFromSignupImpl(
+      {required this.email_id, required this.id, required this.user_id});
+
+  factory _$UserFromSignupImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserFromSignupImplFromJson(json);
+
+  @override
+  final String email_id;
+  @override
+  final String id;
+  @override
+  final String user_id;
+
+  @override
+  String toString() {
+    return 'UserFromSignup(email_id: $email_id, id: $id, user_id: $user_id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserFromSignupImpl &&
+            (identical(other.email_id, email_id) ||
+                other.email_id == email_id) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.user_id, user_id) || other.user_id == user_id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, email_id, id, user_id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserFromSignupImplCopyWith<_$UserFromSignupImpl> get copyWith =>
+      __$$UserFromSignupImplCopyWithImpl<_$UserFromSignupImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserFromSignupImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserFromSignup implements UserFromSignup {
+  const factory _UserFromSignup(
+      {required final String email_id,
+      required final String id,
+      required final String user_id}) = _$UserFromSignupImpl;
+
+  factory _UserFromSignup.fromJson(Map<String, dynamic> json) =
+      _$UserFromSignupImpl.fromJson;
+
+  @override
+  String get email_id;
+  @override
+  String get id;
+  @override
+  String get user_id;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserFromSignupImplCopyWith<_$UserFromSignupImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UserSignupDTO _$UserSignupDTOFromJson(Map<String, dynamic> json) {
+  return _UserSignupDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserSignupDTO {
+  UserFromSignup get userFromSignup => throw _privateConstructorUsedError;
+  PasscodeResponse get passcodeResponse => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserSignupDTOCopyWith<UserSignupDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserSignupDTOCopyWith<$Res> {
+  factory $UserSignupDTOCopyWith(
+          UserSignupDTO value, $Res Function(UserSignupDTO) then) =
+      _$UserSignupDTOCopyWithImpl<$Res, UserSignupDTO>;
+  @useResult
+  $Res call({UserFromSignup userFromSignup, PasscodeResponse passcodeResponse});
+
+  $UserFromSignupCopyWith<$Res> get userFromSignup;
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse;
+}
+
+/// @nodoc
+class _$UserSignupDTOCopyWithImpl<$Res, $Val extends UserSignupDTO>
+    implements $UserSignupDTOCopyWith<$Res> {
+  _$UserSignupDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userFromSignup = null,
+    Object? passcodeResponse = null,
+  }) {
+    return _then(_value.copyWith(
+      userFromSignup: null == userFromSignup
+          ? _value.userFromSignup
+          : userFromSignup // ignore: cast_nullable_to_non_nullable
+              as UserFromSignup,
+      passcodeResponse: null == passcodeResponse
+          ? _value.passcodeResponse
+          : passcodeResponse // ignore: cast_nullable_to_non_nullable
+              as PasscodeResponse,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserFromSignupCopyWith<$Res> get userFromSignup {
+    return $UserFromSignupCopyWith<$Res>(_value.userFromSignup, (value) {
+      return _then(_value.copyWith(userFromSignup: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse {
+    return $PasscodeResponseCopyWith<$Res>(_value.passcodeResponse, (value) {
+      return _then(_value.copyWith(passcodeResponse: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UserSignupDTOImplCopyWith<$Res>
+    implements $UserSignupDTOCopyWith<$Res> {
+  factory _$$UserSignupDTOImplCopyWith(
+          _$UserSignupDTOImpl value, $Res Function(_$UserSignupDTOImpl) then) =
+      __$$UserSignupDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({UserFromSignup userFromSignup, PasscodeResponse passcodeResponse});
+
+  @override
+  $UserFromSignupCopyWith<$Res> get userFromSignup;
+  @override
+  $PasscodeResponseCopyWith<$Res> get passcodeResponse;
+}
+
+/// @nodoc
+class __$$UserSignupDTOImplCopyWithImpl<$Res>
+    extends _$UserSignupDTOCopyWithImpl<$Res, _$UserSignupDTOImpl>
+    implements _$$UserSignupDTOImplCopyWith<$Res> {
+  __$$UserSignupDTOImplCopyWithImpl(
+      _$UserSignupDTOImpl _value, $Res Function(_$UserSignupDTOImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userFromSignup = null,
+    Object? passcodeResponse = null,
+  }) {
+    return _then(_$UserSignupDTOImpl(
+      userFromSignup: null == userFromSignup
+          ? _value.userFromSignup
+          : userFromSignup // ignore: cast_nullable_to_non_nullable
+              as UserFromSignup,
+      passcodeResponse: null == passcodeResponse
+          ? _value.passcodeResponse
+          : passcodeResponse // ignore: cast_nullable_to_non_nullable
+              as PasscodeResponse,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserSignupDTOImpl implements _UserSignupDTO {
+  const _$UserSignupDTOImpl(
+      {required this.userFromSignup, required this.passcodeResponse});
+
+  factory _$UserSignupDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserSignupDTOImplFromJson(json);
+
+  @override
+  final UserFromSignup userFromSignup;
+  @override
+  final PasscodeResponse passcodeResponse;
+
+  @override
+  String toString() {
+    return 'UserSignupDTO(userFromSignup: $userFromSignup, passcodeResponse: $passcodeResponse)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserSignupDTOImpl &&
+            (identical(other.userFromSignup, userFromSignup) ||
+                other.userFromSignup == userFromSignup) &&
+            (identical(other.passcodeResponse, passcodeResponse) ||
+                other.passcodeResponse == passcodeResponse));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, userFromSignup, passcodeResponse);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserSignupDTOImplCopyWith<_$UserSignupDTOImpl> get copyWith =>
+      __$$UserSignupDTOImplCopyWithImpl<_$UserSignupDTOImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserSignupDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserSignupDTO implements UserSignupDTO {
+  const factory _UserSignupDTO(
+      {required final UserFromSignup userFromSignup,
+      required final PasscodeResponse passcodeResponse}) = _$UserSignupDTOImpl;
+
+  factory _UserSignupDTO.fromJson(Map<String, dynamic> json) =
+      _$UserSignupDTOImpl.fromJson;
+
+  @override
+  UserFromSignup get userFromSignup;
+  @override
+  PasscodeResponse get passcodeResponse;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserSignupDTOImplCopyWith<_$UserSignupDTOImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
