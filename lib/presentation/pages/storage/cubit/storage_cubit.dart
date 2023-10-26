@@ -59,10 +59,10 @@ class StorageCubit extends Cubit<StorageState> {
   void uploadFile({required String id})async{
     final file = state.selectedFile;
     final fileName = state.fileName;
-    Either<String, String> uploadRequest;
-    load();
-    uploadRequest = await iStorageFacade.uploadFile(file: file, id: id, fileName: fileName);
-    uploadRequest.fold((l) => fail(l), (r) => pass(r));
+    // Either<String, String> uploadRequest;
+    // load();
+    // uploadRequest = await iStorageFacade.uploadFile(file: file, id: id, fileName: fileName);
+    // uploadRequest.fold((l) => fail(l), (r) => pass(r));
   }
   // DELETE A FILE
   void deleteFile({required String id})async{

@@ -16,7 +16,7 @@ bool isValidEmail(String email) {
 
 String handleExceptions(DioException e){
   print(e.message);
-  if(e.response == null) return "No response from server";
+  if(e.response == null) return e.message;
   print(e.response!.statusCode);
   switch (e.type) {
     case DioExceptionType.connectionError:
