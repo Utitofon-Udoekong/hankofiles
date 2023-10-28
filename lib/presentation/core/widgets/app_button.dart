@@ -5,6 +5,7 @@ class AppButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final bool hasIcon;
+  final bool? hasborder;
   final IconData? icon;
   final bool disabled;
   final void Function()? onPressed;
@@ -18,16 +19,17 @@ class AppButton extends StatelessWidget {
       this.icon,
       this.onPressed,
       required this.title, 
-      required this.disabled});
+      required this.disabled, this.hasborder = false});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: disabled ? null : onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(disabled ? backgroundColor.withOpacity(0.4) : backgroundColor),
+        backgroundColor: MaterialStatePropertyAll(hasborder! ? Colors.white : disabled ? backgroundColor.withOpacity(0.4) : backgroundColor),
         fixedSize: MaterialStatePropertyAll(Size(width, 50)),
-        shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
+        shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), 
+        side: BorderSide(color: hasborder! ? backgroundColor : Colors.transparent)))
       ),
       child: hasIcon
           ? Row(

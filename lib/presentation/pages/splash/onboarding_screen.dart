@@ -40,8 +40,9 @@ class OnboardingScreen extends StatelessWidget {
           ),
               AppButton(
                 width: width,
-                backgroundColor: Colors.white,
+                backgroundColor: kBlack,
                 textColor: kBlack,
+                hasborder: true,
                 hasIcon: false,
                 title: "Login", 
                 onPressed: () => context.push("/login"),
@@ -50,7 +51,7 @@ class OnboardingScreen extends StatelessWidget {
               const SizedBox(height: 20,),
               AppButton(
                 width: width,
-                backgroundColor: kPrimary,
+                backgroundColor: kBlack,
                 textColor: kWhite,
                 hasIcon: false,
                 title: "Register",

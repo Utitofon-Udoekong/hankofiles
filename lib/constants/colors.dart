@@ -4,7 +4,7 @@ const kWhite = Colors.white;
 const kPrimary = Color(0XFF041fa3);
 const kBlack = Colors.black;
 const kBorderColor = Color(0XFFDEE3FF);
-
+const kRed = Colors.red;
 final inputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),
     borderSide: const BorderSide(color: kBorderColor));

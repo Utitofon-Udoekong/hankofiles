@@ -15,9 +15,13 @@ bool isValidEmail(String email) {
   }
 
 String handleExceptions(DioException e){
+  print("message");
   print(e.message);
-  if(e.response == null) return e.message;
+  if(e.response == null) return e.message ?? "No response from server";
+  print("status code");
   print(e.response!.statusCode);
+  print("status message");
+  print(e.response!.statusMessage!);
   switch (e.type) {
     case DioExceptionType.connectionError:
       return "Internet connection error";
@@ -30,7 +34,7 @@ String handleExceptions(DioException e){
     case DioExceptionType.badResponse:
       return "Bad Response";
     default:
-      e.response!.statusMessage!;
+      e.message ?? "No response from server";
   }
   switch (e.response!.statusCode) {
     case 400:

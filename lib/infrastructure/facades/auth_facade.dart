@@ -68,6 +68,8 @@ class AuthFacade implements IAuthFacade {
     Response response;
     try {
       response = await dio.post("/user", data: {"email": email});
+      print(response.headers);
+      print(response.requestOptions.uri);
       final data = response.data;
       final user = UserFromEmail.fromJson(data);
       return right(user);

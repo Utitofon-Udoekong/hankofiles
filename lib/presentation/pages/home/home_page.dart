@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hankofiles/presentation/pages/authentication/cubit/auth_cubit.dart';
 import 'package:hankofiles/presentation/pages/storage/cubit/storage_cubit.dart';
 import 'package:hankofiles/constants/colors.dart';
 import 'package:hankofiles/presentation/core/widgets/app_form_field.dart';
@@ -44,7 +45,18 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.storage_rounded),
             onPressed: () => context.push("/storage")
-          )
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout_rounded),
+            onPressed: () {
+              var dialog = const LogoutDialog();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return dialog;
+                          });
+            }
+          ),
         ],
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(50),
@@ -104,5 +116,78 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _debounceTimer?.cancel();
     super.dispose();
+  }
+}
+
+class LogoutDialog extends StatelessWidget {
+  const LogoutDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("You're about to log out"),
+      titleTextStyle: Theme.of(context).textTheme.titleLarge,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      actions: [
+        Row(children: [
+          InkWell(
+            onTap: () async {
+              context.read<AuthCubit>().reset();
+              context.read<StorageCubit>().reset();
+              context.pushReplacement("/onboarding");
+              // await SessionManager.clearSession();
+              // await context.read<AuthCubit>().signOut().then((signedOut) {
+              //   if (signedOut) {
+              //   }
+              // });
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 45,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kRed,
+              ),
+              child: Text(
+                "Logout",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: kWhite),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          InkWell(
+            onTap: () => context.pop(),
+            child: Container(
+              alignment: Alignment.center,
+              height: 45,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kBlack,
+              ),
+              child: Text(
+                "Cancel",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: kWhite),
+              ),
+            ),
+          ),
+        ])
+      ],
+      backgroundColor: kWhite,
+      contentPadding: const EdgeInsets.all(30),
+      actionsPadding:
+          const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+    );
   }
 }

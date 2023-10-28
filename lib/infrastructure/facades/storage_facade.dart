@@ -1,5 +1,4 @@
 import 'dart:io';
-// import 'dart:io' show HttpHeaders, File;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hankofiles/domain/facades/i_storage_facade.dart';
@@ -58,21 +57,20 @@ class StorageFacade implements IStorageFacade{
   }
 
   /// Uploads a file to supabase, under an [id] folder
-  // @override
-  // Future<Either<String, String>> uploadFile({required File file, required String id, required String fileName}) async{
-  //   try {
-  //     await supabase.client.storage.from("hanko-files").upload("$id/$fileName", file);
-  //     return right("File uploaded");
-  //   } on StorageException catch (e) {
-  //     print(e);
-  //     return left(e.message);
-  //   }
-  // }
+  @override
+  Future<Either<String, String>> uploadFile({required File file, required String id, required String fileName}) async{
+    try {
+      await supabase.client.storage.from("hanko-files").upload("$id/$fileName", file);
+      return right("File uploaded");
+    } on StorageException catch (e) {
+      print(e);
+      return left(e.message);
+    }
+  }
   
   /// return a list of FileObject stored in supabase
   @override
   Future<Either<String, List<FileObject>>> listFiles({required String id}) async{
-    /// TODO: FIX NO ID IS BEING PASSED
     try {
       final files = await supabase.client.storage.from("hanko-files").list(path: id, searchOptions: const SearchOptions(sortBy: SortBy(column: "created_at", order: "desc")));
       return right(files);
